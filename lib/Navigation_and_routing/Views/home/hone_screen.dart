@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart'; 
-import '../../config/color/colors.dart';
-import '../../config/reusable_components/custom_button.dart';
-import '../../config/reusable_components/loader.dart';
-import '../../config/routes/routes_names.dart';
+import '../../../config/color/colors.dart';
+import '../../../config/reusable_components/custom_button.dart';
+import '../../../config/reusable_components/loader.dart';
+import '../../../config/routes/routes_names.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

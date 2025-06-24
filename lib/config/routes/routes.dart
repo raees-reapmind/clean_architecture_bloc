@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigations_routing/config/routes/routes_names.dart'; 
-import '../../Views/view.dart'; 
+import '../../Navigation_and_routing/Views/view.dart'; 
 
 class Routes {
   static Route<dynamic> generateRoutes(RouteSettings settings) {

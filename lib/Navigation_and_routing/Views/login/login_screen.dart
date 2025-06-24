@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:navigations_routing/config/reusable_components/loader.dart';
 
-import '../../config/color/colors.dart';
-import '../../config/reusable_components/custom_button.dart';
-import '../../config/routes/routes_names.dart';
+import '../../../config/color/colors.dart';
+import '../../../config/reusable_components/custom_button.dart';
+import '../../../config/routes/routes_names.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
