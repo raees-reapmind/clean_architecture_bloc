@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 import 'package:navigations_routing/Utils/enums.dart';
+import 'package:navigations_routing/services/session_manager/session_controller.dart';
 
-import '../reposatory/auth/login_reposatory.dart'; 
+import '../repository/auth/login_repository.dart'; 
 
 part 'login_event.dart';
 part 'login_states.dart';
@@ -12,9 +13,9 @@ part 'login_states.dart';
 
 class LoginBloc extends Bloc<LoginEvents, LoginStates> {
 
-   LoginRepository loginRepository = LoginRepository();
+   LoginRepository loginRepository  ;
 
-  LoginBloc() : super( const LoginStates()) {
+  LoginBloc({required this.loginRepository}) : super( const LoginStates()) {
     on<EmailChanged> (_onEmailChanged);
     on<PasswordChanged> (_passwordChanged);
     on<EmailUnfocused> (_emailUnFocused);
@@ -47,7 +48,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   FutureOr<void> _passwordUnFocused(PasswordUnfocused event, Emitter<LoginStates> emit) {
   }
 
-  FutureOr<void> _loginApi(LoginApi event, Emitter<LoginStates> emit) async{ 
+  FutureOr<void> _loginApi(LoginApi event, Emitter<LoginStates> emit) async { 
 
     Map data = {
       "email": state.email,
@@ -63,26 +64,22 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
       state.copywith(postApiStatus: PostApiStatus.loading)
     );
 
-   await loginRepository.login(data).then((value) {
+   await loginRepository.login(data).then((value) async{
     if(value.error.isNotEmpty){ 
       emit(
         state.copywith(message: value.error, postApiStatus: PostApiStatus.error)
       );
     } else {
+      await SessionController().saveUserInPrederence(value);
       emit(
-        state.copywith(
-          postApiStatus: PostApiStatus.success
-        )
+        state.copywith(postApiStatus: PostApiStatus.success)
       );
     }
    }).onError((error, stackTrace) {
     emit(
-        state.copywith(
-          postApiStatus: PostApiStatus.error,
-          message: error.toString()
-        )
-      ); 
-    });
+        state.copywith(postApiStatus: PostApiStatus.error, message: error.toString())
+    );
+  });
 
   }
 

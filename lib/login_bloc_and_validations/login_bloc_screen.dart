@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:navigations_routing/Utils/flush_bar_helper.dart'; 
+import 'package:navigations_routing/Utils/flush_bar_helper.dart';
+import 'package:navigations_routing/config/routes/routes_names.dart'; 
 import 'package:navigations_routing/login_bloc_and_validations/widgets/textfield_widgets.dart';
+import 'package:navigations_routing/main.dart';
+import 'package:navigations_routing/repository/auth/login_repository.dart';
 
 import '../../../config/color/colors.dart';
 import '../../../config/reusable_components/custom_button.dart'; 
@@ -29,7 +32,7 @@ final _formKey = GlobalKey<FormState>();
 @override
 void initState() {
   super.initState();
-  _loginBloc = LoginBloc();
+  _loginBloc = LoginBloc(loginRepository: getIt());
 }
 @override
 Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ Widget build(BuildContext context) {
       } else if (state.postApiStatus == PostApiStatus.loading) {
         FlushBarHelper.showFlushBar(context: context, message: 'Validating...', backgroundColor: ColorsPallete.yellow, margin: const EdgeInsets.all(10.0), padding: EdgeInsets.all(15.0), borderRadius: BorderRadius.circular(8.0));
       } else if (state.postApiStatus == PostApiStatus.success) {
+        Navigator.pushNamed(context, RoutesNames.homeScreen);
         FlushBarHelper.showFlushBar(context: context, message: 'Login Successful', backgroundColor: ColorsPallete.green, icon: Icons.check, margin: const EdgeInsets.all(10.0), padding: EdgeInsets.all(15.0), borderRadius: BorderRadius.circular(8.0));
       }
     },

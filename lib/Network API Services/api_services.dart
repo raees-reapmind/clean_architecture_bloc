@@ -27,6 +27,7 @@ class ApiServices extends BaseApiServices {
 
       jsonResponse = returnResponse(response);
     } catch (e) {
+      log('getApi e: $e'); 
       throw fetchDataException('An unexpected error occurred: $e');
     }
 
